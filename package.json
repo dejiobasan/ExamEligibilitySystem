@@ -15,5 +15,10 @@
   "bugs": {
     "url": "https://github.com/dejiobasan/ExamEligibilitySystem/issues"
   },
-  "homepage": "https://github.com/dejiobasan/ExamEligibilitySystem#readme"
+  "homepage": "https://github.com/dejiobasan/ExamEligibilitySystem#readme",
+  "dependencies": {
+    "body-parser": "^1.20.1",
+    "ejs": "^3.1.8",
+    "express": "^4.18.2"
+  }
 }
