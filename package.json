@@ -1,0 +1,19 @@
+{
+  "name": "exameligibilitysystem",
+  "version": "1.0.0",
+  "description": "A web-app that authenticates students before writing an examination.",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dejiobasan/ExamEligibilitySystem.git"
+  },
+  "author": "Ayodeji Obasan",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dejiobasan/ExamEligibilitySystem/issues"
+  },
+  "homepage": "https://github.com/dejiobasan/ExamEligibilitySystem#readme"
+}
