@@ -33,7 +33,7 @@ app.get("/ExamCheckIn", function(req, res){
 
 
 app.post("/EnrollStudents", function(req, res){
-
+    const FirstName = ""
 });
 
 app.post("/EnrollLecturers", function(req, res){
