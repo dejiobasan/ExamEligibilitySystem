@@ -19,6 +19,16 @@ app.get("/", function(req, res) {
     res.render("landing");
 });
 
+app.get("/EnrollStudents", function(req, res) {
+    res.render("EnrollStudents");
+});
+
+app.get("/EnrollLecturers", function(req, res) {
+    res.render("EnrollLecturers");
+});
+
+
+
 
 
 app.listen(port, function () {
