@@ -28,6 +28,14 @@ app.get("/EnrollLecturers", function(req, res) {
 });
 
 
+app.post("/EnrollStudents", function(req, res){
+
+});
+
+app.post("/EnrollLecturers", function(req, res){
+
+});
+
 
 
 

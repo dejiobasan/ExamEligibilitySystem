@@ -1,3 +1,41 @@
 <%- include('partials/header'); -%>
-
+<h1>Enroll</h1>
+<form class="row g-3" action="/EnrollStudents" method="POST">
+    <div class="row g-3">
+        <div class="col">
+          <input type="text" name="SFname" class="form-control" placeholder="First name" aria-label="First name">
+        </div>
+        <div class="col">
+          <input type="text" name="SLname" class="form-control" placeholder="Last name" aria-label="Last name">
+        </div>
+    </div>
+    <div class="row g-3">
+        <div class="col">
+            <input type="text" name="matricno" class="form-control" placeholder="Matric number" aria-label="Matric number">
+        </div>
+        <div class="col">
+            <select class="form-select" name="SCoursecode" aria-label="Default select example">
+                <option selected>Course Code</option>
+                <option value="1">CPE506</option>
+                <option value="2">CPE502</option>
+                <option value="3">CPE504</option>
+            </select>
+        </div>
+    </div>
+    <div class="row g-3">
+        <div class="col">
+            <select class="form-select" name="SCoursetitle" aria-label="Default select example">
+                <option selected>Course Title</option>
+                <option value="1">Artificial Intelligence</option>
+                <option value="2">Introduction to Operating System</option>
+                <option value="3">Embedded Systems II</option>
+            </select>
+        </div>
+    </div>
+    <div class="row g-3">
+        <div class="col-12">
+            <button type="submit" class="btn btn-primary">Enroll</button>
+        </div>
+    </div>
+</form>
 <%- include('partials/footer'); -%>
