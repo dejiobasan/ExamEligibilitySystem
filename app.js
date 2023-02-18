@@ -27,12 +27,20 @@ app.get("/EnrollLecturers", function(req, res) {
     res.render("EnrollLecturers");
 });
 
+app.get("/ExamCheckIn", function(req, res){
+    res.render("ExamCheckIn")
+}),
+
 
 app.post("/EnrollStudents", function(req, res){
 
 });
 
 app.post("/EnrollLecturers", function(req, res){
+
+});
+
+app.post("/ExamCheckIn", function(req, res){
 
 });
 

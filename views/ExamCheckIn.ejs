@@ -1,0 +1,23 @@
+<%- include('partials/header'); -%>
+    <h1>Check-In</h1>
+    <form action="/ExamCheckIn" method="POST">
+        <div class="row">
+            <div class="col">
+              <input type="text" class="form-control" placeholder="Matric number" aria-label="Matric number">
+            </div>
+            <div class="col">
+                <select class="form-select" name="ExamCoursecode" aria-label="Default select example">
+                    <option selected>Course Code</option>
+                    <option value="1">CPE506</option>
+                    <option value="2">CPE502</option>
+                    <option value="3">CPE504</option>
+                </select>
+            </div>
+            <div class="row g-3">
+                <div class="col-12">
+                    <button type="submit" class="btn btn-primary">Check-In</button>
+                </div>
+            </div>
+        </div>
+    </form>
+<%- include('partials/footer'); -%>
