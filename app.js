@@ -66,20 +66,34 @@ app.get("/ExamCheckIn", function(req, res){
 
 
 app.post("/EnrollStudents", function(req, res){
-    // const FirstName = ;
-    // const LastName = ;
-    // const MaticNo = ;
-    // const CourseCode = ;
-    // const CourseTitle = ;
+    const FirstName = req.body.SFname;
+    const LastName = req.body.SLname;
+    const MaticNo = req.body.matricno;
+    const CourseCode = req.body.SCoursecode;
+    const CourseTitle = req.body.SCoursetitle;
     // const fingerprinttemplate = ;
 
+
+    connection1.query('INSERT INTO studentsdb (LastName, FirstName, MatricNumber, CourseCode, CourseTitle, fingerprint_template) VALUES (?, ?, ?, ?, ?, ?)', [LastName, FirstName, MaticNo, CourseCode, CourseTitle, fingerprinttemplate], (err, result) => {
+        if (err) throw err;
+        res.send("<h1>Successfully Enrolled!</h1>")
+        });
 });
 
 app.post("/EnrollLecturers", function(req, res){
-    // const LFirstName = ;
-    // const LLastName = ;
-    // const LCourseCode = ;
-    // const LCourseTitle = ;
+    const LFirstName = req.body.LFname;
+    const LLastName = req.body.LLname;
+    const LCourseCode = req.body.LCoursecode;
+    const LCourseTitle = req.body.LCoursetitle;
+    connection2.query('INSERT INTO lecturersdb (LastName, FirstName, CourseCode, CourseTitle) VALUES (?, ?, ?, ?)', [LLastName, LFirstName, LCourseCode, LCourseTitle], (err, result) => {
+    if (err) throw err;
+    res.redirect("Reports");
+    });
+
+});
+
+app.get("/Reports", function(req, res){
+
 });
 
 app.post("/ExamCheckIn", function(req, res){
