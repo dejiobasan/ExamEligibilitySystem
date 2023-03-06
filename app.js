@@ -69,7 +69,13 @@ app.get("/ExamCheckIn", function(req, res){
 
 app.get("/save-template", (req, res) => {
     const url = "https://localhost:3000/EnrollStudents";
-    request(url, (error, response, html) => {
+    request(url, async (error, response, html) => {
+        async function wait(duration) {
+            return new Promise((resolve) => {
+                setTimeout(() => resolve(), duration * 1000)
+            })
+        }
+        await wait(10);
         if (!error && response.statusCode === 200) {
             const $ = cheerio.load(html);
             const imageUrl = $("img").attr("src");
