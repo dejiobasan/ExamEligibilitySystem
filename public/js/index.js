@@ -1,15 +1,13 @@
 const reader = new dp.devices.FingerprintReader()
-const outputContainer = document.querySelector(".fingerprints-container")
+const image = document.querySelector("#fingerprint")
 const button = document.querySelector("#EnrollButton")
 const Utf8 = dp.core.Utf8
 const Base64 = dp.core.Base64
 
 reader.on("SamplesAcquired", (e) => {
     console.log(e)
-    const image = new Image()
     const sample = e.samples[0]
     image.src = "data:image/png;base64," + btoa(Utf8.fromBase64Url(sample))
-    outputContainer.appendChild(image)
 });		
 
 reader.on("DeviceConnected", (e) => {

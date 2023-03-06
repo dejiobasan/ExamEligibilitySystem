@@ -1,9 +1,27 @@
 <%- include('partials/header'); -%>
-
-
-
-
-
-
-
+<h1>Reports</h1>
+<table>
+    <thead>
+        <tr>
+            <th>S/N</th>
+            <th>Last Name</th>
+            <th>First Name</th>
+            <th>Matric Number</th>
+            <th>Course Code</th>
+            <th>Course Title</th>
+        </tr>
+    </thead>
+    <tbody>
+        <% data.forEach(function(row) { %>
+            <tr>
+              <td><%= row.id %></td>
+              <td><%= row.LastName %></td>
+              <td><%= row.FirstName %></td>
+              <td><%= row.MatricNumber %></td>
+              <td><%= row.CourseCode %></td>
+              <td><%= row.CourseTitle %></td>
+            </tr>
+        <% }); %>
+    </tbody>
+</table>
 <%- include('partials/footer'); -%>
