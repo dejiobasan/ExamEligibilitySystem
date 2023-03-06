@@ -93,7 +93,7 @@ app.get("/save-template", (req, res) => {
 });
 
 
-app.post("/EnrollStudents", function(req, res){
+app.post("/EnrollStudents", async function(req, res){
     const FirstName = req.body.SFname;
     const LastName = req.body.SLname;
     const MatricNo = req.body.matricno;
@@ -101,6 +101,13 @@ app.post("/EnrollStudents", function(req, res){
     const CourseTitle = req.body.SCoursetitle;
     const base64Image = "";
 
+    async function wait(duration) {
+        return new Promise((resolve) => {
+            setTimeout(() => resolve(), duration * 1000)
+        })
+    }
+
+    await wait(10);
     connection1.query('INSERT INTO students (LastName, FirstName, MatricNumber, CourseCode, CourseTitle, fingerprint_template) VALUES (?, ?, ?, ?, ?, ?)', [LastName, FirstName, MatricNo, CourseCode, CourseTitle, base64Image], (err, result) => {
         if (err) {
             console.log(err);
