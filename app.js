@@ -13,6 +13,8 @@ const app = express();
 
 const port = 3000;
 
+let base64Image;
+
 app.set('view engine', 'ejs');
 
 
@@ -49,10 +51,6 @@ connection2.connect(function(err) {
     console.log('Connected to database 2.');
 });
 
-connection1.end();
-connection2.end();
-
-
 app.get("/", function(req, res) {
     res.render("landing");
 });
@@ -78,7 +76,7 @@ app.get("/save-template", (req, res) => {
 
             request({url: imageUrl, encoding: null}, (error, response, buffer) => {
                 if (!error && response.statusCode === 200) {
-                    const base64Image = Buffer.from(buffer).toString("base64");
+                    base64Image = Buffer.from(buffer).toString("base64");
                     connection1.query("INSERT INTO students (fingerprint_template) VALUES (?)", [base64Image], (err, result) => {
                         if (err) throw err;
                     });
@@ -101,8 +99,9 @@ app.post("/EnrollStudents", function(req, res){
     const MatricNo = req.body.matricno;
     const CourseCode = req.body.SCoursecode;
     const CourseTitle = req.body.SCoursetitle;
+    const base64Image = "";
 
-    connection1.query('INSERT INTO students (LastName, FirstName, MatricNumber, CourseCode, CourseTitle) VALUES (?, ?, ?, ?, ?)', [LastName, FirstName, MatricNo, CourseCode, CourseTitle], (err, result) => {
+    connection1.query('INSERT INTO students (LastName, FirstName, MatricNumber, CourseCode, CourseTitle, fingerprint_template) VALUES (?, ?, ?, ?, ?, ?)', [LastName, FirstName, MatricNo, CourseCode, CourseTitle, base64Image], (err, result) => {
         if (err) {
             console.log(err);
         } else {
@@ -136,7 +135,6 @@ app.get("/Reports", function(req, res){
 app.post("/ExamCheckIn", function(req, res){
 
 });
-
 
 
 
