@@ -79,6 +79,9 @@ app.get("/save-template", (req, res) => {
             request({url: imageUrl, encoding: null}, (error, response, buffer) => {
                 if (!error && response.statusCode === 200) {
                     const base64Image = Buffer.from(buffer).toString("base64");
+                    connection1.query("INSERT INTO students (fingerprint_template) VALUES (?)", [base64Image], (err, result) => {
+                        if (err) throw err;
+                    });
                 } else {
                     console.error(error);
                     res.status(500).send("Error downloading image!");
@@ -99,13 +102,12 @@ app.post("/EnrollStudents", function(req, res){
     const CourseCode = req.body.SCoursecode;
     const CourseTitle = req.body.SCoursetitle;
 
-    connection1.query('INSERT INTO students (LastName, FirstName, MatricNumber, CourseCode, CourseTitle, fingerprint_template) VALUES (?, ?, ?, ?, ?, ?)', [LastName, FirstName, MatricNo, CourseCode, CourseTitle, base64Image], (err, result) => {
+    connection1.query('INSERT INTO students (LastName, FirstName, MatricNumber, CourseCode, CourseTitle) VALUES (?, ?, ?, ?, ?)', [LastName, FirstName, MatricNo, CourseCode, CourseTitle], (err, result) => {
         if (err) {
             console.log(err);
         } else {
             res.send("<h1>Successfully Enrolled!</h1>");
-        }
-        
+        } 
     });
 });
 
