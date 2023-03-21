@@ -118,7 +118,7 @@ app.post("/EnrollStudents", async function(req, res){
         if (err) {
             console.log(err);
         } else {
-            res.send("<h1>Successfully Enrolled!</h1>");
+            res.render("EnrollSuccess");
         } 
     });
 });
