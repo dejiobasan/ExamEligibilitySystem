@@ -68,6 +68,10 @@ app.get("/ExamCheckIn", function(req, res){
     res.render("ExamCheckIn")
 });
 
+app.get("/ExamCheckOut", (req, res) => {
+    res.render("ExamCheckOut")
+});
+
 // app.get("/save-template", (req, res) => {
 //     const url = "https://localhost:3000/EnrollStudents";
 //     request(url, async (error, response, html) => {

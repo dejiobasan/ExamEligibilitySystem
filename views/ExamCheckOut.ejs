@@ -1,0 +1,32 @@
+<%- include('partials/header'); -%>
+    <h1>Check-Out</h1>
+    <form action="/ExamCheckOut" method="POST">
+        <div class="row">
+            <div class="col">
+              <input type="text" class="form-control" placeholder="Matric number" name="matric" aria-label="Matric number">
+            </div>
+            <div class="col">
+                <select class="form-select" name="ExamCoursecode" aria-label="Default select example">
+                    <option selected>Course Code</option>
+                    <option value="CPE506">CPE506</option>
+                    <option value="CPE502">CPE502</option>
+                    <option value="CPE504">CPE504</option>
+                </select>
+            </div>
+            <textarea style="width:1px;height:1px;opacity:0" required name="image" id="fingerprint_image"></textarea>
+            <div class="row g-3">
+                <div class="col-12">
+                    <button id="fingerprint_button" class="btn btn-primary" type="button">Add Fingerprint</button>
+                </div>
+            </div>
+            <div class="row g-3">
+                <div class="col-12">
+                    <button type="submit" class="btn btn-primary">Check-Out</button>
+                </div>
+            </div>
+        </div>
+    </form>
+    <div>
+        <img src="" id="fingerprint" alt="" width="150" height="150">
+    </div>
+<%- include('partials/footer'); -%>
