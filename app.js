@@ -72,6 +72,10 @@ app.get("/ExamCheckOut", (req, res) => {
     res.render("ExamCheckOut")
 });
 
+app.get("/EnrollSuccess", (req, res) => {
+    res.render("EnrollSuccess")
+});
+
 // app.get("/save-template", (req, res) => {
 //     const url = "https://localhost:3000/EnrollStudents";
 //     request(url, async (error, response, html) => {
@@ -101,7 +105,7 @@ app.get("/ExamCheckOut", (req, res) => {
 //             res.status(500).send("Error requesting EJS page!");
 //         }
 //     });
-// });
+// }); re-usable code
 
 
 app.post("/EnrollStudents", async function(req, res){
@@ -113,14 +117,20 @@ app.post("/EnrollStudents", async function(req, res){
     const base64Image = req.body.image;
 
     // console.log(base64Image)
+
+    console.log(Object.keys(req.body))
+    res.render("EnrollSuccess")
+    return
     connection1.query('INSERT INTO students (LastName, FirstName, MatricNumber, CourseCode, CourseTitle, fingerprint_template) VALUES (?, ?, ?, ?, ?, ?)', [LastName, FirstName, MatricNo, CourseCode, CourseTitle, base64Image], (err, result) => {
         if (err) {
-            console.log(err);
+            console.log(err)
+            res.status(401).json({sucess: false})
         } else {
-            res.render("EnrollSuccess");
+            res.json({sucess: true})
         } 
     });
 });
+
 
 app.post("/EnrollLecturers", function(req, res){
     const LFirstName = req.body.LFname;
