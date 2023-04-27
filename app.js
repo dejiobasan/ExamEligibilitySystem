@@ -76,6 +76,7 @@ app.get("/EnrollSuccess", (req, res) => {
     res.render("EnrollSuccess")
 });
 
+//<-- REUSABLE CODE -->
 // app.get("/save-template", (req, res) => {
 //     const url = "https://localhost:3000/EnrollStudents";
 //     request(url, async (error, response, html) => {
@@ -105,7 +106,8 @@ app.get("/EnrollSuccess", (req, res) => {
 //             res.status(500).send("Error requesting EJS page!");
 //         }
 //     });
-// }); re-usable code
+// }); 
+// <-- REUSABLE CODE -->
 
 
 app.post("/EnrollStudents", async function(req, res){
@@ -114,14 +116,15 @@ app.post("/EnrollStudents", async function(req, res){
     const MatricNo = req.body.matricno;
     const CourseCode = req.body.SCoursecode;
     const CourseTitle = req.body.SCoursetitle;
-    const base64Image = req.body.image;
-
+    const base64Image = req.body.image1;
+    const base64Image2 = req.body.image2;
+    const base64Image3 = req.body.image3;
+    const base64Image4 = req.body.image4;
+    const base64Image5 = req.body.image5;
+    
     // console.log(base64Image)
-
-    console.log(Object.keys(req.body))
-    res.render("EnrollSuccess")
-    return
-    connection1.query('INSERT INTO students (LastName, FirstName, MatricNumber, CourseCode, CourseTitle, fingerprint_template) VALUES (?, ?, ?, ?, ?, ?)', [LastName, FirstName, MatricNo, CourseCode, CourseTitle, base64Image], (err, result) => {
+    // console.log(Object.keys(req.body))
+    connection1.query('INSERT INTO students (LastName, FirstName, MatricNumber, CourseCode, CourseTitle, fingerprint_template, fingerprint_template2, fingerprint_template3, fingerprint_template4, fingerprint_template5) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', [LastName, FirstName, MatricNo, CourseCode, CourseTitle, base64Image, base64Image2, base64Image3, base64Image4, base64Image5], (err, result) => {
         if (err) {
             console.log(err)
             res.status(401).json({sucess: false})
