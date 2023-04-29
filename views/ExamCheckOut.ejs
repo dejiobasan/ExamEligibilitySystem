@@ -1,6 +1,6 @@
 <%- include('partials/header'); -%>
     <h1>Check-Out</h1>
-    <form action="/ExamCheckOut" method="POST">
+    <form action="/ExamCheckOut" id="form_submit" method="POST">
         <div class="row">
             <div class="col">
               <input type="text" class="form-control" placeholder="Matric number" name="matric" aria-label="Matric number">
@@ -13,7 +13,6 @@
                     <option value="CPE504">CPE504</option>
                 </select>
             </div>
-            <textarea style="width:1px;height:1px;opacity:0" required name="image" id="fingerprint_image"></textarea>
             <div class="row g-3">
                 <div class="col-12">
                     <button id="fingerprint_button" class="btn btn-primary" type="button">Add Fingerprint</button>
@@ -26,7 +25,33 @@
             </div>
         </div>
     </form>
-    <div>
-        <img src="" id="fingerprint" alt="" width="150" height="150">
-    </div>
+
+    <div class="modal-custom  hidden">
+        <div class="modal-child">
+            <div class="modal-main">
+                <div class="modal-image">
+                    <div class="image-wrapper">
+                        <img id="fingerprint" src="images/cancel.jpg" alt="fingerprint image">
+                    </div>
+                </div>
+                <div class="modal-details">
+                    <div style="padding: 5px;border: 1px dashed rgba(61, 61, 61, 0.192);">
+                        <p style="font-weight:bold;">Captured <span id="scan-count">0</span>/1</p>
+                        <hr>
+                        <button id="scan_button" style="border:1px solid gray;padding: 2px 30px;display: block;margin-left: auto;">Scan</button>
+                    </div>
+
+                    <div>
+
+                        <p style="font-size:14px; font-style: italic;">
+                            Place Right Hand Index finger on the selected Fingerprint hardware
+                        </p>
+                    </div>
+                    <div style="flex: 1"></div>
+                    <button id="save_button" style="border: none; padding: 4px 0;border-radius: 5px;align-self: flex-end;width: 100%;">Save</button>
+                </div>
+            </div>
+        </div>
+</div>
+
 <%- include('partials/footer'); -%>

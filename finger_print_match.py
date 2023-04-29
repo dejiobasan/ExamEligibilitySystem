@@ -28,7 +28,7 @@ def compare_fingerprints(img1, img2):
         
     print(len(keypoints_1), len(keypoints_2), len(match_points), len(match_points) / keypoints * 100)
     
-    if len(match_points) / keypoints * 100 > 2:
+    if len(match_points) / keypoints * 100 >  2:
         return True
     return False
 
@@ -43,14 +43,13 @@ def convert_image(image):
 def handle_route():
     data = request.json
     img1 = data['img1']
-    img2 = data['img2']
+    images = data['images']
     
     img1 = convert_image(img1)
-    img2 = convert_image(img2)
-    cv2.imwrite("img1.png", img1)
-    cv2.imwrite("img2.png", img2)
+    images = list(map( lambda image: convert_image(image),  images))
    
-    return {"isSame": compare_fingerprints(img1, img2)}
+    
+    return {"isSame": any(map( lambda image: compare_fingerprints(img1, image),  images))}
 
 
 app.run(port=9000, host='0.0.0.0', debug=True)

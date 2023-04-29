@@ -11,7 +11,10 @@ const left = document.querySelector(".left")
 const right = document.querySelector(".right")
 const saveButton = document.querySelector("#save_button")
 const formSubmit = document.querySelector("#form_submit")
-const recordCount = 5
+const recordCount = ["/ExamCheckIn", "/ExamCheckOut"].includes(window.location.pathname) ? 1 : 5;
+
+
+
 const recordedImages = []
 let deviceUid = 0
 
@@ -19,20 +22,21 @@ let scanning = false
 
 let imagePos = 0
 
+
 document.querySelector(".modal-child").addEventListener("click", (e) => {
     e.stopPropagation()
 })
 modal.addEventListener("click", () => {
     modal.classList.toggle("hidden")
 })
-left.addEventListener("click", (e) => {
+left?.addEventListener("click", (e) => {
     if (recordedImages.length === 0) return
     imagePos = Math.max(0, --imagePos)
 
     image.src = recordedImages[imagePos]
 })
 
-right.addEventListener("click", (e) => {
+right?.addEventListener("click", (e) => {
     if (recordedImages.length === 0) return
     imagePos = Math.min(recordedImages.length - 1, ++imagePos)
     image.src = recordedImages[imagePos]
@@ -67,14 +71,14 @@ button.addEventListener("click", (e) => {
 })
 scanButton.addEventListener("click", async (e) => {
     if (scanning || recordedImages.length === recordCount) return
-    scanning = true
-    scanButton.textContent = "Scanning..."
+   
     const devices = await reader.enumerateDevices()
 
     if (devices.length === 0) {
         throw new Error("No fingerprint reader is connected")
     }
-
+    scanning = true
+    scanButton.textContent = "Scanning..."
     deviceUid = devices[0]
 
     console.log("starting fingerprint acquisition")
@@ -94,11 +98,30 @@ saveButton.addEventListener("click", (e) => {
     modal.classList.toggle("hidden")
 })
 
-formSubmit.addEventListener("submit", async (e) => {
+formSubmit?.addEventListener("submit", async (e) => {
     e.preventDefault()
     if (recordedImages.length !== recordCount) return;
-    console.log("prevented")
     const form = new FormData(e.target)
+
+    if (["/ExamCheckIn", "/ExamCheckOut"].includes(window.location.pathname)) {
+        form.append("image", recordedImages[0])
+
+        let res = await fetch(window.location.pathname, {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(Object.fromEntries(form.entries())),
+        })
+
+        if (res.ok) {
+            window.location.href = "/AuthSuccess"
+        } else {
+            window.location.href = "/AuthFailure"
+        }
+    }   else {
+
+    
 
     for (let i = 0; i < recordCount; i++) {
         form.append(`image${i + 1}`, recordedImages[i])
@@ -117,4 +140,5 @@ formSubmit.addEventListener("submit", async (e) => {
     } else {
         console.error("An error occured with saving the student data")
     }
+}
 })

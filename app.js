@@ -52,19 +52,19 @@ connection2.connect(function(err) {
     console.log('Connected to database 2.');
 });
 
-app.get("/", function(req, res) {
+app.get("/", (req, res) => {
     res.render("landing");
 });
 
-app.get("/EnrollStudents", function(req, res) {
+app.get("/EnrollStudents", (req, res) => {
     res.render("EnrollStudents");
 });
 
-app.get("/EnrollLecturers", function(req, res) {
+app.get("/EnrollLecturers", (req, res) => {
     res.render("EnrollLecturers");
 });
 
-app.get("/ExamCheckIn", function(req, res){
+app.get("/ExamCheckIn", (req, res) => {
     res.render("ExamCheckIn")
 });
 
@@ -75,6 +75,16 @@ app.get("/ExamCheckOut", (req, res) => {
 app.get("/EnrollSuccess", (req, res) => {
     res.render("EnrollSuccess")
 });
+
+app.get("/AuthSuccess", (req, res) => {
+    res.render("AuthSuccess")
+});
+
+app.get("/AuthFailure", (req, res) => {
+    res.render("AuthFailure")
+});
+
+
 
 //<-- REUSABLE CODE -->
 // app.get("/save-template", (req, res) => {
@@ -110,7 +120,7 @@ app.get("/EnrollSuccess", (req, res) => {
 // <-- REUSABLE CODE -->
 
 
-app.post("/EnrollStudents", async function(req, res){
+app.post("/EnrollStudents", async (req, res) => {
     const FirstName = req.body.SFname;
     const LastName = req.body.SLname;
     const MatricNo = req.body.matricno;
@@ -135,7 +145,7 @@ app.post("/EnrollStudents", async function(req, res){
 });
 
 
-app.post("/EnrollLecturers", function(req, res){
+app.post("/EnrollLecturers", (req, res) => {
     const LFirstName = req.body.LFname;
     const LLastName = req.body.LLname;
     const LCourseCode = req.body.LCoursecode;
@@ -150,19 +160,19 @@ app.post("/EnrollLecturers", function(req, res){
     });
 });
 
-app.get("/Reports", function(req, res){
+app.get("/Reports", (req, res) => {
     connection1.query("SELECT * from students", (error, rows) => {
         if (error) throw error;
         res.render("Reports", { data: rows});
     });
 });
 
-app.post("/ExamCheckIn",async function(req, res){
+app.post("/ExamCheckIn", async (req, res) => {
     const matricno = req.body.matric
     const image1 = req.body.image
 
     const result = await new Promise((resolve, reject) => {
-        connection1.query("select fingerprint_template from students where MatricNumber = ?",  [matricno], (err, result) => {
+        connection1.query("select fingerprint_template, fingerprint_template2, fingerprint_template3, fingerprint_template4, fingerprint_template5 from students where MatricNumber = ?",  [matricno], (err, result) => {
             if (err) {
                 console.log(err);
             }
@@ -178,24 +188,66 @@ app.post("/ExamCheckIn",async function(req, res){
         res.send("Error! The following matric number does not have a fingerprint enrolled.")
         return
     }
-    let image2 = result[0].fingerprint_template.toString()
-    
+
+    let images = Object.values(result[0]).map(img => img.toString())
+
 
     const response = await axios.post("http://localhost:9000/compare_fingerprints", {
         img1: image1,
-        img2: image2
+        images
     });
 
+    console.log(response.data)
     if (response.data.isSame) {
-        res.render("AuthSuccess")
+        res.json({isSame: true})
     } else {
-        res.render("AuthFailure")
+        res.status(401).json({isSame: false})
+    }
+});
+
+app.post("/ExamCheckOut", async (req, res) => {
+    const matricno = req.body.matric
+    const image1 = req.body.image
+
+    const result = await new Promise((resolve, reject) => {
+        connection1.query("select fingerprint_template, fingerprint_template2, fingerprint_template3, fingerprint_template4, fingerprint_template5 from students where MatricNumber = ?",  [matricno], (err, result) => {
+            if (err) {
+                console.log(err);
+            }
+            else {
+                resolve(result)
+                
+            } 
+        });
+    });
+   
+   
+    if (result.length === 0) {
+        res.send("Error! The following matric number does not have a fingerprint enrolled.")
+        return
+    }
+
+    let images = Object.values(result[0]).map(img => img.toString())
+
+
+    const response = await axios.post("http://localhost:9000/compare_fingerprints", {
+        img1: image1,
+        images
+    });
+
+    console.log(response.data)
+    if (response.data.isSame) {
+        res.json({isSame: true})
+    } else {
+        res.status(401).json({isSame: false})
     }
 });
 
 
 
-app.listen(port, function () {
+
+
+app.listen(port,  () => {
     console.log("server started at port 3000.");
 });
 
